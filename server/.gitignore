@@ -1,0 +1,38 @@
+# Dependencies (Sobrang bigat nito at pwedeng i-download ulit via npm/yarn)
+node_modules/
+.pnpm-store/
+
+# Production Build Outputs (Mga compiled files na ginagawa tuwing magbu-build)
+dist/
+build/
+.next/
+.nuxt/
+out/
+.svelte-kit/
+generated/
+coverage/
+
+# Environment Variables / Mga Sikreto (Huwag na huwag ia-upload sa GitHub!)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# Debug logs at temporary files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.eslintcache
+.stylelintcache
+
+# VS Code settings (Pansarili mong settings sa code editor)
+.vscode/*
+!.vscode/extensions.json
+.history/
+
+# System files mula sa computer mo
+.DS_Store
+Thumbs.db
