@@ -4,6 +4,20 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { prisma } from './config/database.js';
+import userRoutes from './routes/userRoutes.js';
+import addressRoutes from './routes/addressRoutes.js';
+import categoryRoutes from './routes/categoryRoutes.js';
+import productRoutes from './routes/productRoutes.js';
+import productImageRoutes from './routes/productImageRoutes.js';
+import productVariantRoutes from './routes/productVariantRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
+import cartItemRoutes from './routes/cartItemRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+import orderItemRoutes from './routes/orderItemRoutes.js';
+import paymentRoutes from './routes/paymentRoutes.js';
+import paymentProofRoutes from './routes/paymentProofRoutes.js';
+import inventoryMovementRoutes from './routes/inventoryMovementRoutes.js';
+import reviewRoutes from './routes/reviewRoutes.js';
 
 const app = express();
 
@@ -28,30 +42,23 @@ app.use(
   })
 );
 
-app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'Welcome to Clothique API',
-  });
-});
+// Register routes
+app.use('/api/users', userRoutes);
+app.use('/api/addresses', addressRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/product-images', productImageRoutes);
+app.use('/api/product-variants', productVariantRoutes);
+app.use('/api/carts', cartRoutes);
+app.use('/api/cart-items', cartItemRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/order-items', orderItemRoutes);
+app.use('/api/payments', paymentRoutes);
+app.use('/api/payment-proofs', paymentProofRoutes);
+app.use('/api/inventory-movements', inventoryMovementRoutes);
+app.use('/api/reviews', reviewRoutes);
 
-app.get('/api/health', async (req, res) => {
-  try {
-    await prisma.$queryRaw`SELECT 1`;
-
-    res.status(200).json({
-      success: true,
-      message: 'Clothique API and MySQL are connected',
-      database: 'Connected',
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Database connection failed',
-    });
-  }
-});
-
+// 404 handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -65,10 +72,10 @@ async function startServer() {
   try {
     await prisma.$connect();
 
-    console.log('MySQL database connected successfully');
+    console.log('MySQL database connected successfully!');
 
     app.listen(PORT, () => {
-      console.log(`Clothique API running on http://localhost:${PORT}`);
+      console.log(`E-Commerce API running on http://localhost:${PORT}`);
     });
   } catch (error) {
     console.error('Server startup failed:', error);
@@ -77,3 +84,4 @@ async function startServer() {
 }
 
 startServer();
+export default app;
