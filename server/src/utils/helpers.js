@@ -45,6 +45,22 @@ export const handleError = (res, error) => {
     return sendZodError(res, error);
   }
 
+  if (error?.name === 'MulterError') {
+    const message =
+      error.code === 'LIMIT_FILE_SIZE'
+        ? 'File is too large. Maximum allowed size is 5MB.'
+        : error.message;
+
+    return res.status(400).json({ success: false, message });
+  }
+
+  if (typeof error?.status === 'number' && error.status >= 400 && error.status < 500) {
+    return res.status(error.status).json({
+      success: false,
+      message: error.message,
+    });
+  }
+
   switch (error?.code) {
     case 'P2002':
       return res.status(409).json({
