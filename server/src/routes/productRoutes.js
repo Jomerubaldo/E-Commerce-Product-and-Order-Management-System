@@ -1,4 +1,5 @@
 import express from 'express';
+import { adminOnly } from '../middleware/auth.js';
 import {
   createProduct,
   deleteProduct,
@@ -9,10 +10,10 @@ import {
 
 const router = express.Router();
 
-router.post('/', createProduct);
+router.post('/', ...adminOnly, createProduct);
 router.get('/', getAllProducts);
 router.get('/:id', getProductId);
-router.put('/:id', updateProduct);
-router.delete('/:id', deleteProduct);
+router.put('/:id', ...adminOnly, updateProduct);
+router.delete('/:id', ...adminOnly, deleteProduct);
 
 export default router;

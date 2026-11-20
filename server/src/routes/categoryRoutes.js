@@ -1,4 +1,5 @@
 import express from 'express';
+import { adminOnly } from '../middleware/auth.js';
 import {
   createCategory,
   deleteCategory,
@@ -9,10 +10,10 @@ import {
 
 const router = express.Router();
 
-router.post('/', createCategory);
+router.post('/', ...adminOnly, createCategory);
 router.get('/', getAllCategories);
 router.get('/:id', getCategoryId);
-router.put('/:id', updateCategory);
-router.delete('/:id', deleteCategory);
+router.put('/:id', ...adminOnly, updateCategory);
+router.delete('/:id', ...adminOnly, deleteCategory);
 
 export default router;
